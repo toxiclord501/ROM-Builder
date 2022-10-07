@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: ghcr.io/sushrut1101/docker:latest
+
+    resource_class: large
+    steps:
+      - checkout
+
+      - run:
+          name: Sync
+          command: |
+            bash sync.sh
+
+      - run:
+          name: Build
+          command: |
+            bash build.sh
+
+      - run:
+          name: Upload Ccache
+          command: |
+            export TIMEOUT=43200
+            bash upload.sh
